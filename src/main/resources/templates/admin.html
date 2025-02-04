@@ -7,14 +7,14 @@
 <body>
 <div class="container">
     <h1>Adicionar Produto</h1>
-    <form action="/addProduto" method="post">
+    <form action="/addProduto" method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="nome" class="form-label">Nome</label>
             <input type="text" class="form-control" id="nome" name="nome" required>
         </div>
         <div class="mb-3">
-            <label for="urlImagem" class="form-label">URL da Imagem</label>
-            <input type="text" class="form-control" id="urlImagem" name="urlImagem" required>
+            <label for="imagem" class="form-label"></label>
+            <input type="file" id="imagem" accept="image/*" name="imagem" required>
         </div>
         <div class="mb-3">
             <label for="preco" class="form-label">Preço</label>
@@ -31,7 +31,7 @@
     <div th:each="produto : ${produtos}" class="col-md-3 col-sm-6 mb-4">
         <div class="d-flex flex-wrap">
             <div class="card" style="width: 14rem; margin: auto;">
-                <img th:src="${produto.urlImagem}" class="card-img-top img-fluid" alt="Imagem da Flor" style="height: auto; max-width: 100%; text-align: center;">
+                <img th:src="@{'/' + ${produto.urlImagem}}" class="card-img-top img-fluid" alt="Imagem da Flor" style="height: auto; max-width: 100%; text-align: center;">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${produto.nome}"></h5>
                     <p class="card-text" th:text="${produto.descricao}"></p>

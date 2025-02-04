@@ -1,12 +1,15 @@
 package com.samuel.demo.Controller;
 
 import com.samuel.demo.model.Produto;
+import com.samuel.demo.service.ArmazenamentoImagemService;
 import com.samuel.demo.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Controller
@@ -14,6 +17,9 @@ public class ProdutoController {
 
     @Autowired
     private ProdutoService produtoService;
+
+    @Autowired
+    private ArmazenamentoImagemService imagemService;
 
     //página de compras
     @GetMapping("/")
@@ -31,13 +37,28 @@ public class ProdutoController {
 
     //adicionar produtos
     @PostMapping("/addProduto")
-    public String addProduto(@RequestParam String nome,
+
+    public String addProduto(@ModelAttribute Produto produto,
+                             @RequestParam("imagem") MultipartFile imagem){
+        try{
+            //salva a imagem e obtém o caminho
+            String nomeArquivo = imagemService.armazenarImg(imagem);
+            produto.setUrlImagem(nomeArquivo);
+
+            //salvar o produto no banco de dados
+            produtoService.addProduto(produto);
+
+    } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return "redirect:/admin";
+    /*public String addProduto(@RequestParam String nome,
                              @RequestParam String urlImagem,
                              @RequestParam double preco,
                              @RequestParam String descricao){
         Produto produto = new Produto(nome, urlImagem, preco, descricao);
         produtoService.addProduto(produto);
-        return "redirect:/admin";
+        return "redirect:/admin";*/
     }
 
     //editar produtos
@@ -52,9 +73,25 @@ public class ProdutoController {
 
     //atualizar produto
     @PostMapping("/atualizarProduto/{id}")
-    public String atualizarProduto(@PathVariable Long id, @ModelAttribute Produto produtoAtualizado){
-        produtoService.atualizarProduto(id, produtoAtualizado);
+    public String atualizarProduto(@PathVariable Long id,
+                                   @ModelAttribute Produto produtoAtualizado,
+                                   @RequestParam("imagem") MultipartFile imagem){
+        try{
+            //Se uma nova Imagem for enviada, salva e atualiza o caminho
+            if (!imagem.isEmpty()) {
+                String caminhoImagem = imagemService.armazenarImg(imagem);
+                produtoAtualizado.setUrlImagem(caminhoImagem);
+            }
+
+            //atualizar o Produto no banco de dados
+            produtoService.atualizarProduto(id, produtoAtualizado);
+    } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return "redirect:/admin";
+    /*public String atualizarProduto(@PathVariable Long id, @ModelAttribute Produto produtoAtualizado){
+        produtoService.atualizarProduto(id, produtoAtualizado);
+        return "redirect:/admin";*/
     }
 
     //deletar produto
