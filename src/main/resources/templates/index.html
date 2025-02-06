@@ -7,15 +7,24 @@
 <body>
 <div class="container">
     <h1>Flores Disponíveis</h1>
+    <div class="text-center mt-4">
+        <a href="/carrinho" class="btn btn-success">Ir para o Carrinho</a>
+    </div>
     <div th:each="produto : ${produtos}" class="col-md-3 col-sm-6 mb-4">
         <div class="d-flex flex-wrap" >
-            <div class="card" style="width: 14rem; margim:auto;">
+            <div class="card" style="width: 14rem; margin:auto;">
                 <img th:src="${produto.urlImagem}" class="card-img-top img-fluid" alt="Imagem da Flor" style="height: auto;
-                    max-width: 100%px; text-align:center; ">
+                    max-width: 100%; text-align:center; ">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${produto.nome}"></h5>
                     <p class="card-text" th:text="${produto.descricao}"></p>
-                    <p class="card-text"><strong>Preço: R$ </strong><span th:text="${produto.preco}"></span></p>
+                    <form action="carrinho/add" method="post">
+                        <input type="hidden" name="produtoId" th:value="${produto.id}">
+                        <label>
+                            <input type="number" name="quantidade" value="1" min="1" class="form-control">
+                        </label>
+                        <button type="submit" class="btn btn-primary">Adicionar ao carrinho</button>
+                    </form>
                 </div>
             </div>
         </div>
