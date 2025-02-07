@@ -1,7 +1,10 @@
 package com.samuel.demo.Controller;
 
+import com.samuel.demo.model.Carrinho;
 import com.samuel.demo.model.Produto;
+import com.samuel.demo.repository.ProdutoRepository;
 import com.samuel.demo.service.ArmazenamentoImagemService;
+import com.samuel.demo.service.CarrinhoService;
 import com.samuel.demo.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class AdminController {
@@ -19,6 +23,22 @@ public class AdminController {
 
     @Autowired
     private ArmazenamentoImagemService imagemService;
+
+    @Autowired
+    private ProdutoRepository produtoRepository;
+    @Autowired
+    private CarrinhoService carrinhoService;
+
+    //página de compras - lista de produtos
+    @GetMapping("/")
+    public String index(Model model){
+        Carrinho carrinho = carrinhoService.criarCarrinho();
+        model.addAttribute("produtos", produtoService.getAllProdutos());
+        model.addAttribute("carrinhoId", carrinho.getId());
+        /*List<Produto> produtos = produtoRepository.findAll();
+        model.addAttribute("produtos", produtoService.getAllProdutos());*/
+        return "index";
+    }
 
     //página do administrador
     @GetMapping("/admin")

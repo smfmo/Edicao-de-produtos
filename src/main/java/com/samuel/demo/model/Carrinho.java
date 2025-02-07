@@ -1,37 +1,17 @@
 package com.samuel.demo.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.List;
 
 @Entity
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
 public class Carrinho {
-    //atributos
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ItemCarrrinho> itens;
-
-    private double total;
-
-    //métodos getters e setters
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
-    }
+    @OneToMany(mappedBy = "carrinho", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ItemCarrinho> itens;
 
     public Long getId() {
         return id;
@@ -41,11 +21,11 @@ public class Carrinho {
         this.id = id;
     }
 
-    public List<ItemCarrrinho> getItens() {
+    public List<ItemCarrinho> getItens() {
         return itens;
     }
 
-    public void setItens(List<ItemCarrrinho> itens) {
+    public void setItens(List<ItemCarrinho> itens) {
         this.itens = itens;
     }
 }

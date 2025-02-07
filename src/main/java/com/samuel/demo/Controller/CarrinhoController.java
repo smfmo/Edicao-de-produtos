@@ -1,40 +1,41 @@
 package com.samuel.demo.Controller;
 
-import com.samuel.demo.model.Carrinho;
-import com.samuel.demo.repository.CarrinhoRepository;
+
+import com.samuel.demo.model.ItemCarrinho;
+import com.samuel.demo.model.Produto;
 import com.samuel.demo.service.CarrinhoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+import java.util.List;
+
+@Controller
 @RequestMapping("/carrinho")
 public class CarrinhoController {
-
-    private final CarrinhoService carrinhoService;
     @Autowired
-    private CarrinhoRepository carrinhoRepository;
+    private CarrinhoService carrinhoService;
 
-    //construtor
-    public CarrinhoController(CarrinhoService carrinhoService) {
-        this.carrinhoService = carrinhoService;
+    //vizualizar o carrinho
+    @GetMapping("/{carrinhoId}")
+    public String verCarrinho(@PathVariable Long carrinhoId, Model model){
+        List<ItemCarrinho> itens = carrinhoService.listarItensDoCarrinho(carrinhoId);
+        model.addAttribute("itens", itens);
+        return "carrinho";
+    }
+    //adicionar os produtos ao carrinho
+    @PostMapping("/adicionar")
+    public String adicionarItemAoCarrinho(@RequestParam Long carrinhoId,
+                                          @RequestParam Long produtoId,
+                                          @RequestParam int quantidade){
+        carrinhoService.adicionarItemAoCarrinho(carrinhoId, produtoId, quantidade);
+        return "redirect:/carrinho/" + carrinhoId;
     }
 
-
-    @PostMapping("/carrinho/add")
-    public Carrinho addProdutoCarrinho(@PathVariable Long carrinhoId,
-                                       @RequestParam Long produtoId,
-                                       @RequestParam int quantidade){
-        return carrinhoService.addProdutoCarrinho(carrinhoId, produtoId, quantidade);
-
-    }
-
-    @GetMapping("/carrinho")
-    public Carrinho buscarCarrinhoPeloId(@PathVariable Long carrinhoId){
-        return carrinhoService.buscarCarrinho(carrinhoId);
-    }
-
-    @DeleteMapping("/carrinho/clear")
-    public void limparCarrinho(@PathVariable Long carrinhoId){
-        carrinhoService.limparCarrinho(carrinhoId);
+    @PostMapping("/finalizar/{carrinhoId}")
+    public String finalizarCompra(@PathVariable Long carrinhoId){
+        carrinhoService.finalizarCompra(carrinhoId);
+        return "redirect:/";
     }
 }

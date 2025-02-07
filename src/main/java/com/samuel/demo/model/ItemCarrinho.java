@@ -3,27 +3,21 @@ package com.samuel.demo.model;
 import jakarta.persistence.*;
 
 @Entity
-public class ItemCarrrinho {
-
+public class ItemCarrinho{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "produto_id", nullable = false)
+    @JoinColumn(name = "produto_id")
     private Produto produto;
 
     private int quantidade;
 
-    public ItemCarrrinho(Long id, Produto produto, int quantidade) {
-        this.id = id;
-        this.produto = produto;
-        this.quantidade = quantidade;
-    }
+    @ManyToOne
+    @JoinColumn(name = "carrinho_id")
+    private Carrinho carrinho;
 
-    public ItemCarrrinho() {
-
-    }
 
     public Long getId() {
         return id;
@@ -47,5 +41,13 @@ public class ItemCarrrinho {
 
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public Carrinho getCarrinho() {
+        return carrinho;
+    }
+
+    public void setCarrinho(Carrinho carrinho) {
+        this.carrinho = carrinho;
     }
 }

@@ -1,8 +1,10 @@
 package com.samuel.demo.repository;
 
-import com.samuel.demo.model.ItemCarrrinho;
+import com.samuel.demo.model.ItemCarrinho;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ItemCarrinhoRepository extends JpaRepository<ItemCarrrinho, Long> {
+import java.util.List;
 
+public interface ItemCarrinhoRepository extends JpaRepository<ItemCarrinho, Long> {
+    List<ItemCarrinho> findByCarrinhoId(Long carrinhoId);
 }
