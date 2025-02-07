@@ -1,8 +1,11 @@
 package com.samuel.demo.Controller;
 
+import com.samuel.demo.model.Carrinho;
 import com.samuel.demo.model.ItemCarrrinho;
 import com.samuel.demo.model.Produto;
+import com.samuel.demo.repository.CarrinhoRepository;
 import com.samuel.demo.repository.ProdutoRepository;
+import com.samuel.demo.service.CarrinhoService;
 import com.samuel.demo.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +26,10 @@ public class ProdutoController {
     private ProdutoService produtoService;
     @Autowired
     private final ProdutoRepository produtoRepository;
+    @Autowired
+    private CarrinhoRepository carrinhoRepository;
+
+    private CarrinhoService carrinhoService;
 
     private final List<ItemCarrrinho> itemCarrrinho = new ArrayList<>();
 
@@ -44,7 +51,10 @@ public class ProdutoController {
     public String addProdutoCarrinho(@RequestParam Long produtoId, @RequestParam int quantidade){
         Produto produto = produtoRepository.findById(produtoId).orElse(null);
         if (produto != null) {
-            itemCarrrinho.add(new ItemCarrrinho(null, produto, quantidade));
+            Carrinho carrinho = carrinhoRepository.findById(1L).orElse(new Carrinho());
+           itemCarrrinho.add(new ItemCarrrinho(null, produto, quantidade));
+
+            carrinhoRepository.save(carrinho);
         }
         return "redirect:/carrinho";
     }

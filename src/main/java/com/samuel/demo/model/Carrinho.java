@@ -25,7 +25,6 @@ public class Carrinho {
     private double total;
 
     //métodos getters e setters
-
     public double getTotal() {
         return total;
     }

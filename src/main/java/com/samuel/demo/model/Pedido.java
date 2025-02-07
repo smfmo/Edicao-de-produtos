@@ -9,11 +9,8 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Getter
+
 @Entity
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class Pedido {
     //métodos getters e setters
     //atributos
@@ -28,9 +25,6 @@ public class Pedido {
 
     private double totalDoPedido;
 
-    public Pedido(Long id, Produto produto, int quantidade, Pedido pedido) {
-
-    }
 
     public void setId(Long id) {
         this.id = id;
