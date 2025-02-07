@@ -18,6 +18,26 @@ public class ItemCarrinho{
     @JoinColumn(name = "carrinho_id")
     private Carrinho carrinho;
 
+    private double precoTotal;
+
+    private String nomeProduto;
+
+    //métodos getters e setters
+    public double getPrecoTotal() {
+        return precoTotal;
+    }
+
+    public void setPrecoTotal(double precoTotal) {
+        this.precoTotal = precoTotal;
+    }
+
+    public String getNomeProduto() {
+        return nomeProduto;
+    }
+
+    public void setNomeProduto(String nomeProduto) {
+        this.nomeProduto = nomeProduto;
+    }
 
     public Long getId() {
         return id;

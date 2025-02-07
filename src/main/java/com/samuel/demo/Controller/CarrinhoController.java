@@ -28,8 +28,10 @@ public class CarrinhoController {
     @PostMapping("/adicionar")
     public String adicionarItemAoCarrinho(@RequestParam Long carrinhoId,
                                           @RequestParam Long produtoId,
-                                          @RequestParam int quantidade){
-        carrinhoService.adicionarItemAoCarrinho(carrinhoId, produtoId, quantidade);
+                                          @RequestParam int quantidade,
+                                          @RequestParam String nomeProduto,
+                                          @RequestParam double precoTotal){
+        carrinhoService.adicionarItemAoCarrinho(carrinhoId, produtoId, quantidade, nomeProduto, precoTotal);
         return "redirect:/carrinho/" + carrinhoId;
     }
 

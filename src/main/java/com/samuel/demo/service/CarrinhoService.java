@@ -26,11 +26,14 @@ public class CarrinhoService{
     }
 
     //adicionar itens ao carrinho
-    public void adicionarItemAoCarrinho(Long carrinhoId, Long produtoId, int quantidade){
+    public void adicionarItemAoCarrinho(Long carrinhoId, Long produtoId,
+                                        int quantidade, String nomeProduto, double precoTotal){
         Carrinho carrinho = carrinhoRepository.findById(carrinhoId).orElseThrow();
         Produto produto = produtoService.buscarpeloId(produtoId).orElseThrow();
 
         ItemCarrinho item = new ItemCarrinho();
+        item.setPrecoTotal(item.getPrecoTotal());
+        item.setNomeProduto(produto.getNome());
         item.setProduto(produto);
         item.setQuantidade(quantidade);
         item.setCarrinho(carrinho);
