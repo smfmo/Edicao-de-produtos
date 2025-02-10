@@ -35,7 +35,7 @@
                         </label>
                             <input type="hidden" name="nomeProduto" th:value="${produto.nome}">
 
-                        <input type="hidden" name="precoTotal" th:value="${#numbers.formatDecimal(item.quantidade * item.produto.preco, 1, 2)}">
+                        <input type="hidden" name="precoTotal" th:value="${produto.preco} * ${#numbers.formatInteger(1, 1)}">
                         <button type="submit" class="btn btn-primary">Adicionar ao Carrinho</button>
                     </form>
                 </td>

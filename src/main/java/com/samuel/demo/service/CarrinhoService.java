@@ -32,7 +32,7 @@ public class CarrinhoService{
         Produto produto = produtoService.buscarpeloId(produtoId).orElseThrow();
 
         ItemCarrinho item = new ItemCarrinho();
-        item.setPrecoTotal(item.getPrecoTotal());
+        item.setPrecoTotal(produto.getPreco() * quantidade);
         item.setNomeProduto(produto.getNome());
         item.setProduto(produto);
         item.setQuantidade(quantidade);
