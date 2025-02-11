@@ -52,4 +52,9 @@ public class CarrinhoService{
         // aqui vai limpar o carrinho após a compra
         itemCarrinhoRepository.deleteAll(carrinho.getItens());
     }
+
+    //metodo para buscar o carrinho atual
+    public Carrinho buscarCarrinhoAtual(Long carrinhoId){
+        return carrinhoRepository.findById(carrinhoId).orElseThrow();
+    }
 }

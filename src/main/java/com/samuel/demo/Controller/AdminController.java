@@ -30,7 +30,7 @@ public class AdminController {
     private CarrinhoService carrinhoService;
 
     //página de compras - lista de produtos
-    @GetMapping("/")
+    @GetMapping
     public String index(Model model){
         Carrinho carrinho = carrinhoService.criarCarrinho();
         model.addAttribute("produtos", produtoService.getAllProdutos());
