@@ -44,6 +44,7 @@ public class CarrinhoService{
     public List<ItemCarrinho> listarItensDoCarrinho(Long carrinhoId){
         return itemCarrinhoRepository.findByCarrinhoId(carrinhoId);
     }
+
     public void finalizarCompra(Long carrinhoId){
         Carrinho carrinho = carrinhoRepository.findById(carrinhoId).orElseThrow();
         //lógica de finalizar a compra, salvar no banco de dados (vai aqui)
@@ -56,5 +57,10 @@ public class CarrinhoService{
     //metodo para buscar o carrinho atual
     public Carrinho buscarCarrinhoAtual(Long carrinhoId){
         return carrinhoRepository.findById(carrinhoId).orElseThrow();
+    }
+
+    //metodo para exibir as compras no controle de vendas
+    public List<Carrinho> exibirCarrinho(){
+        return carrinhoRepository.findAllWithItens();
     }
 }

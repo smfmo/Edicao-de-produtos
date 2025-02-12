@@ -3,6 +3,7 @@ package com.samuel.demo.Controller;
 
 import com.samuel.demo.model.ItemCarrinho;
 import com.samuel.demo.model.Produto;
+import com.samuel.demo.repository.ItemCarrinhoRepository;
 import com.samuel.demo.service.CarrinhoService;
 import com.samuel.demo.service.ProdutoService;
 import jakarta.servlet.http.HttpSession;
@@ -20,6 +21,9 @@ public class CarrinhoController {
     private CarrinhoService carrinhoService;
     @Autowired
     private ProdutoService produtoService;
+    @Autowired
+    private ItemCarrinhoRepository itemCarrinhoRepository;
+
 
     //vizualizar o carrinho
     @GetMapping("/{carrinhoId}")
@@ -74,5 +78,12 @@ public class CarrinhoController {
                 produto.getPreco() * quantidade);
 
         return "redirect:/carrinho/" + carrinhoId;
+    }
+
+    //ver as vendas no controle de vendas
+    @GetMapping("/controleVenda")
+    public String exibirCompras(Model model){
+        model.addAttribute("carrinhos", carrinhoService.exibirCarrinho());
+        return "controleVenda";
     }
 }
