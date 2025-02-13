@@ -1,6 +1,7 @@
 package com.samuel.demo.Controller;
 
 
+import com.samuel.demo.model.Carrinho;
 import com.samuel.demo.model.ItemCarrinho;
 import com.samuel.demo.model.Produto;
 import com.samuel.demo.repository.ItemCarrinhoRepository;
@@ -65,11 +66,26 @@ public class CarrinhoController {
     public String adicionarItem(@RequestParam Long produtoId,
                                 @RequestParam int quantidade,
                                 HttpSession session){
+        //limpar carrinhos vazios
+        carrinhoService.limparCarrinhosVazios();
+
         Long carrinhoId = (Long) session.getAttribute("carrinhoId");
+        Carrinho carrinho = null;
+
         if (carrinhoId == null) {
             //se não houver carrinho na sessão, cria um novo
-            carrinhoId = carrinhoService.criarCarrinho().getId();
+            carrinho = carrinhoService.criarCarrinho();
+            carrinhoId = carrinho.getId();
             session.setAttribute("carrinhoId", carrinhoId);
+        } else {
+            //verifica se o carrinho já existe no banco de dados
+            carrinho = carrinhoService.buscarCarrinhoAtual(carrinhoId);
+            if (carrinho == null) {
+                //se o carrinho não existir, cria um novo
+                carrinho = carrinhoService.criarCarrinho();
+                carrinhoId = carrinho.getId();
+                session.setAttribute("carrinhoId", carrinhoId);
+            }
         }
 
         //adiciona o item ao carrinho
@@ -80,10 +96,4 @@ public class CarrinhoController {
         return "redirect:/carrinho/" + carrinhoId;
     }
 
-    //ver as vendas no controle de vendas
-    @GetMapping("/controleVenda")
-    public String exibirCompras(Model model){
-        model.addAttribute("carrinhos", carrinhoService.exibirCarrinho());
-        return "controleVenda";
-    }
 }

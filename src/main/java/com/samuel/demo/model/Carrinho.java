@@ -7,6 +7,8 @@ import java.util.List;
 
 @Entity
 public class Carrinho {
+
+    //atributos
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -14,6 +16,7 @@ public class Carrinho {
     @OneToMany(mappedBy = "carrinho", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ItemCarrinho> itens = new ArrayList<>();
 
+    //métodos getters e setters
     public Long getId() {
         return id;
     }

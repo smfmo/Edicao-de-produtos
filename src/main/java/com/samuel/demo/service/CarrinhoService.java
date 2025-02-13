@@ -5,6 +5,7 @@ import com.samuel.demo.model.ItemCarrinho;
 import com.samuel.demo.model.Produto;
 import com.samuel.demo.repository.CarrinhoRepository;
 import com.samuel.demo.repository.ItemCarrinhoRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,5 +63,27 @@ public class CarrinhoService{
     //metodo para exibir as compras no controle de vendas
     public List<Carrinho> exibirCarrinho(){
         return carrinhoRepository.findAllWithItens();
+    }
+
+    //limpar carrinhos  exceto o ativo
+    public void limparCarrinhosVaziosExcetoAtivo(HttpSession session){
+        Long carrinhoIdAtivo = (Long) session.getAttribute("carrinhoId");
+        List<Carrinho> carrinhos = carrinhoRepository.findAll();
+
+        for(Carrinho carrinho : carrinhos){
+            if (!carrinho.getId().equals(carrinhoIdAtivo)) {
+                carrinhoRepository.delete(carrinho);
+            }
+        }
+    }
+
+    //limpar carrinhos vazios
+    public void limparCarrinhosVazios(){
+        List<Carrinho> carrinhos = carrinhoRepository.findAll();
+        for (Carrinho carrinho : carrinhos) {
+            if (carrinho.getItens().isEmpty()) {
+                carrinhoRepository.delete(carrinho);
+            }
+        }
     }
 }

@@ -25,7 +25,11 @@
             <textarea class="form-control" id="descricao" name="descricao" required></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Adicionar Produto</button>
-    </form>
+    </form><br>
+
+    <div>
+        <a th:href="@{/controleVenda}" class="btn btn-warning">CONTROLE DE VENDAS</a>
+    </div>
 
     <h1>Produtos Cadastrados</h1>
     <div th:each="produto : ${produtos}" class="col-md-3 col-sm-6 mb-4">
@@ -42,6 +46,7 @@
             </div>
         </div>
     </div>
+
 </div>
 </body>
 </html>

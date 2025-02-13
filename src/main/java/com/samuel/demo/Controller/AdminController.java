@@ -1,6 +1,7 @@
 package com.samuel.demo.Controller;
 
 import com.samuel.demo.model.Carrinho;
+import com.samuel.demo.model.ItemCarrinho;
 import com.samuel.demo.model.Produto;
 import com.samuel.demo.repository.ProdutoRepository;
 import com.samuel.demo.service.ArmazenamentoImagemService;
@@ -111,5 +112,12 @@ public class AdminController {
     public String deletarProduto(@PathVariable Long id){
         produtoService.deletarProduto(id);
         return "redirect:/admin";
+    }
+
+    //ver as vendas no controle de vendas
+    @GetMapping("/controleVenda")
+    public String exibirCompras(Model model){
+        model.addAttribute("carrinhos", carrinhoService.exibirCarrinho());
+        return "controleVenda";
     }
 }
