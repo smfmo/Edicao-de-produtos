@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br" >
 <head>
     <meta charset="UTF-8">
     <title>Controle de Vendas</title>
@@ -10,11 +10,18 @@
 <div class="container mt-5">
     <h1 class="text-center">Controle de Vendas</h1>
     <div th:each="carrinho : ${carrinhos}">
-        <h3>Carrinho ID: <span th:text="${carrinho.id}"></span></h3>
+        <h2>Carrinho ID: <span th:text="${carrinho.id}"></span></h2>
+        <h4 th:if="${carrinho.cliente != null}">
+            Nome do Cliente: <span th:text="${carrinho.cliente.nome}"></span>
+        </h4>
+        <h4 th:if="${carrinho.cliente != null}">
+            Telefone: <span th:text="${carrinho.cliente.telefone}"></span>
+        </h4>
+        <h4> Data e hora da compra: <span th:text="${#temporals.format(carrinho.dataHoraCompra, 'dd/MM/yyyy HH:mm:ss')}"></span></h4>
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>ID</th>
+                <th>Id</th>
                 <th>Produto</th>
                 <th>Quantidade</th>
                 <th>Preço Unitário</th>

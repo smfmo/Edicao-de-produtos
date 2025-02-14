@@ -1,6 +1,7 @@
 package com.samuel.demo.service;
 
 import com.samuel.demo.model.Carrinho;
+import com.samuel.demo.model.Cliente;
 import com.samuel.demo.model.ItemCarrinho;
 import com.samuel.demo.model.Produto;
 import com.samuel.demo.repository.CarrinhoRepository;
@@ -9,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -46,10 +48,13 @@ public class CarrinhoService{
         return itemCarrinhoRepository.findByCarrinhoId(carrinhoId);
     }
 
-    public void finalizarCompra(Long carrinhoId){
+    public void finalizarCompra(Long carrinhoId, Cliente cliente){
         Carrinho carrinho = carrinhoRepository.findById(carrinhoId).orElseThrow();
-        //lógica de finalizar a compra, salvar no banco de dados (vai aqui)
+        carrinho.setCliente(cliente);
+        carrinho.setDataHoraCompra(LocalDateTime.now());
+        carrinhoRepository.save(carrinho);
 
+        //lógica de finalizar a compra, salvar no banco de dados (vai aqui)
 
         // aqui vai limpar o carrinho após a compra
         itemCarrinhoRepository.deleteAll(carrinho.getItens());

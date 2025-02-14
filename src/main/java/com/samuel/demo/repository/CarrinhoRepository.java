@@ -9,6 +9,9 @@ import java.util.List;
 
 @Repository
 public interface CarrinhoRepository extends JpaRepository<Carrinho, Long> {
-@Query("SELECT DISTINCT c FROM Carrinho c LEFT JOIN FETCH c.itens")
+    @Query("SELECT DISTINCT c FROM Carrinho c " +
+            "LEFT JOIN FETCH c.itens " +
+            "LEFT JOIN FETCH c.cliente " +
+            "WHERE SIZE(c.itens) > 0")
     List<Carrinho> findAllWithItens();
 }

@@ -36,6 +36,7 @@ public class AdminController {
         Carrinho carrinho = carrinhoService.criarCarrinho();
         model.addAttribute("produtos", produtoService.getAllProdutos());
         model.addAttribute("carrinhoId", carrinho.getId());
+        carrinhoService.limparCarrinhosVazios();
         /*List<Produto> produtos = produtoRepository.findAll();
         model.addAttribute("produtos", produtoService.getAllProdutos());*/
         return "index";

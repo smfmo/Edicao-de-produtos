@@ -2,6 +2,7 @@ package com.samuel.demo.Controller;
 
 
 import com.samuel.demo.model.Carrinho;
+import com.samuel.demo.model.Cliente;
 import com.samuel.demo.model.ItemCarrinho;
 import com.samuel.demo.model.Produto;
 import com.samuel.demo.repository.ItemCarrinhoRepository;
@@ -54,10 +55,19 @@ public class CarrinhoController {
         return "redirect:/carrinho/" + carrinhoId;
     }
 
+    @GetMapping("/finalizar/{carrinhoId}")
+    public String mostrarFormCliente(@PathVariable Long carrinhoId, Model model){
+        model.addAttribute("carrinhoId", carrinhoId);
+        model.addAttribute("cliente", new Cliente());
+        return "formulario-cliente";
+    }
+
     @PostMapping("/finalizar/{carrinhoId}")
-    public String finalizarCompra(@PathVariable Long carrinhoId, HttpSession session){
-        carrinhoService.finalizarCompra(carrinhoId);
+    public String finalizarCompra(@PathVariable Long carrinhoId, HttpSession session,
+                                  @ModelAttribute Cliente cliente){
+        carrinhoService.finalizarCompra(carrinhoId, cliente);
         session.removeAttribute("carrinhoId"); //aqui remove o carrinho da sessão após finalizar a compra
+        carrinhoService.limparCarrinhosVazios();
         return "redirect:/";
     }
 
