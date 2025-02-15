@@ -34,7 +34,7 @@ public class AdminController {
     @GetMapping
     public String index(Model model){
         Carrinho carrinho = carrinhoService.criarCarrinho();
-        model.addAttribute("produtos", produtoService.getAllProdutos());
+        model.addAttribute("produtos", produtoService.buscarProdutosAtivos());
         model.addAttribute("carrinhoId", carrinho.getId());
         carrinhoService.limparCarrinhosVazios();
         /*List<Produto> produtos = produtoRepository.findAll();
@@ -45,8 +45,21 @@ public class AdminController {
     //página do administrador
     @GetMapping("/admin")
     public String admin(Model model){
-        model.addAttribute("produtos", produtoService.getAllProdutos());
+        // filtra somente produtos ativos
+        List<Produto> produtosAtivos = produtoService.buscarProdutosAtivos();
+        List<Produto> produtosInativos = produtoService.buscarProdutosInativos();
+
+        model.addAttribute("produtos", produtosAtivos);
+        model.addAttribute("produtosInativos", produtosInativos);
+
         return "admin";
+    }
+
+    //aqui restaura os produtos inativos
+    @GetMapping("/restaurarProduto/{id}")
+    public String restaurarProduto(@PathVariable Long id){
+        produtoService.restaurarProduto(id);
+        return "redirect:/admin";
     }
 
     //adicionar produtos

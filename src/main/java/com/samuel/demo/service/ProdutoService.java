@@ -42,6 +42,27 @@ public class ProdutoService {
 
     //deletar produto
     public void deletarProduto(Long id){
-        repository.deleteById(id);
+        repository.findById(id).ifPresent(produto -> {
+            produto.setEmEstoque(false);
+            repository.save(produto);
+        });
+    }
+
+    //buscar somente os produtos ativos
+    public List<Produto> buscarProdutosAtivos(){
+        return repository.findByEmEstoqueTrue();
+    }
+
+    //buscar produtos inativos
+    public List<Produto> buscarProdutosInativos(){
+        return repository.findByEmEstoqueFalse();
+    }
+
+    //restaurar o produto inativo
+    public void restaurarProduto(Long id){
+        repository.findById(id).ifPresent(produto -> {
+            produto.setEmEstoque(true);
+            repository.save(produto);
+        });
     }
 }

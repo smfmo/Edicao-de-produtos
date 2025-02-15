@@ -16,6 +16,7 @@ public class Produto {
     private double preco;
     private String descricao;
 
+    private Boolean emEstoque = true;
 
     //construtor obrigatorio para JPA
     public Produto(){
@@ -40,6 +41,14 @@ public class Produto {
     }
 
     //métodos getters e setters
+    public Boolean getEmEstoque() {
+        return emEstoque;
+    }
+
+    public void setEmEstoque(Boolean emEstoque) {
+        this.emEstoque = emEstoque;
+    }
+
     public Long getId() {
         return id;
     }

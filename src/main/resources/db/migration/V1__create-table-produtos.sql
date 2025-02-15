@@ -3,5 +3,6 @@ CREATE TABLE produtos (
     nome VARCHAR(255),
     url_imagem VARCHAR(255),
     preco  DOUBLE PRECISION,
-    descricao TEXT
+    descricao TEXT,
+    emEstoque BOOLEAN default true
 );
