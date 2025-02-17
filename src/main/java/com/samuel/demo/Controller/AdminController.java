@@ -30,18 +30,6 @@ public class AdminController {
     @Autowired
     private CarrinhoService carrinhoService;
 
-    //página de compras - lista de produtos
-    @GetMapping
-    public String index(Model model){
-        Carrinho carrinho = carrinhoService.criarCarrinho();
-        model.addAttribute("produtos", produtoService.buscarProdutosAtivos());
-        model.addAttribute("carrinhoId", carrinho.getId());
-        carrinhoService.limparCarrinhosVazios();
-        /*List<Produto> produtos = produtoRepository.findAll();
-        model.addAttribute("produtos", produtoService.getAllProdutos());*/
-        return "index";
-    }
-
     //página do administrador
     @GetMapping("/admin")
     public String admin(Model model){
@@ -129,7 +117,7 @@ public class AdminController {
     }
 
     //ver as vendas no controle de vendas
-    @GetMapping("/controleVenda")
+    @GetMapping("controleVenda")
     public String exibirCompras(Model model){
         model.addAttribute("carrinhos", carrinhoService.exibirCarrinho());
         return "controleVenda";
