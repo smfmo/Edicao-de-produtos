@@ -1,9 +1,6 @@
 package com.samuel.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.hibernate.annotations.processing.Pattern;
 
 @Entity
@@ -15,10 +12,21 @@ public class Cliente {
 
     private String nome;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "endereco_id", referencedColumnName = "id")
+    private Endereco endereco;
 
     private String telefone;
 
     //métodos getters e setters
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
 
     public Long getId() {
         return id;

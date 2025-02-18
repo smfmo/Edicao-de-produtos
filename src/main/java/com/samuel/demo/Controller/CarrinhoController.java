@@ -1,10 +1,7 @@
 package com.samuel.demo.Controller;
 
 
-import com.samuel.demo.model.Carrinho;
-import com.samuel.demo.model.Cliente;
-import com.samuel.demo.model.ItemCarrinho;
-import com.samuel.demo.model.Produto;
+import com.samuel.demo.model.*;
 import com.samuel.demo.repository.ItemCarrinhoRepository;
 import com.samuel.demo.service.CarrinhoService;
 import com.samuel.demo.service.ProdutoService;
@@ -63,8 +60,29 @@ public class CarrinhoController {
     }
 
     @PostMapping("/finalizar/{carrinhoId}")
-    public String finalizarCompra(@PathVariable Long carrinhoId, HttpSession session,
-                                  @ModelAttribute Cliente cliente){
+    public String finalizarCompra(@PathVariable Long carrinhoId,
+                                  @RequestParam String nome,
+                                  @RequestParam String telefone,
+                                  @RequestParam String cep,
+                                  @RequestParam String logradouro,
+                                  @RequestParam String bairro,
+                                  @RequestParam String localidade,
+                                  @RequestParam String uf,
+                                  @RequestParam String numero,
+                                  HttpSession session){
+        Cliente cliente = new Cliente();
+        cliente.setNome(nome);
+        cliente.setTelefone(telefone);
+
+        Endereco endereco = new Endereco();
+        endereco.setCep(cep);
+        endereco.setLogradouro(logradouro);
+        endereco.setBairro(bairro);
+        endereco.setLocalidade(localidade);
+        endereco.setUf(uf);
+        endereco.setNumero(numero);
+
+        cliente.setEndereco(endereco);
         carrinhoService.finalizarCompra(carrinhoId, cliente);
         session.removeAttribute("carrinhoId"); //aqui remove o carrinho da sessão após finalizar a compra
         carrinhoService.limparCarrinhosVazios();

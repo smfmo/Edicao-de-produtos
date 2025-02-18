@@ -16,6 +16,13 @@
         <h4 th:if="${carrinho.cliente != null}">
             Telefone: <span th:text="${carrinho.cliente.telefone}"></span>
         </h4>
+        <h4 th:if="${carrinho.cliente != null}">
+            Endereço: <span th:text="${carrinho.cliente.endereco.logradouro}"></span>
+            <span th:text="${carrinho.cliente.endereco.bairro}"></span>
+            <span th:text="${carrinho.cliente.endereco.localidade}"></span>
+            <span th:text="${carrinho.cliente.endereco.uf}"></span>
+             Número: <span th:text="${carrinho.cliente.endereco.numero}"></span>
+        </h4>
         <h4> Data e hora da compra: <span th:text="${#temporals.format(carrinho.dataHoraCompra, 'dd/MM/yyyy HH:mm:ss')}"></span></h4>
         <table class="table table-striped">
             <thead>
