@@ -5,6 +5,15 @@
     <title>Controle de Vendas</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
+<style>
+    .endereco-box{
+        background-color: #eceff1; /* Tom de cinza mais escuro */
+        border-radius: 8px; /* Bordas arredondadas */
+        padding: 12px; /* Espaçamento interno */
+        border: 1px solid #cfd8dc; /* Borda sutil para destaque */
+        font-size: 16px; /* Tamanho da fonte ajustado */
+    }
+</style>
 <body>
 <div class="container mt-5">
     <h1 class="text-center">Controle de Vendas</h1>
@@ -16,14 +25,14 @@
         <h4 th:if="${carrinho.cliente != null}">
             Telefone: <span th:text="${carrinho.cliente.telefone}"></span>
         </h4>
-        <h4 th:if="${carrinho.cliente != null}">
-            Endereço: <span th:text="${carrinho.cliente.endereco.logradouro}"></span>
-            <span th:text="${carrinho.cliente.endereco.bairro}"></span>
-            <span th:text="${carrinho.cliente.endereco.localidade}"></span>
-            <span th:text="${carrinho.cliente.endereco.uf}"></span>
-             Número: <span th:text="${carrinho.cliente.endereco.numero}"></span>
-            Complemento: <span th:text="${carrinho.cliente.endereco.complemento}"></span>
-        </h4>
+            <div th:if="${carrinho.cliente != null}" class="endereco-box">
+                <strong>Endereço:</strong> <span th:text="${carrinho.cliente.endereco.logradouro}"></span >
+                <span th:text="${carrinho.cliente.endereco.bairro}" ></span>
+                <span th:text="${carrinho.cliente.endereco.localidade}"></span>
+                <span th:text="${carrinho.cliente.endereco.uf}"></span><br>
+                <strong>Número: </strong><span th:text="${carrinho.cliente.endereco.numero}"></span>
+                <strong>Complemento:</strong> <span th:text="${carrinho.cliente.endereco.complemento}"></span>
+            </div>
         <h4> Data e hora da compra: <span th:text="${#temporals.format(carrinho.dataHoraCompra, 'dd/MM/yyyy HH:mm:ss')}"></span></h4>
         <table class="table table-striped">
             <thead>

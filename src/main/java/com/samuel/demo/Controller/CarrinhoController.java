@@ -94,6 +94,7 @@ public class CarrinhoController {
         endereco.setLocalidade(localidade);
         endereco.setUf(uf);
         endereco.setNumero(numero);
+        endereco.setComplemento(complemento);
 
         cliente.setEndereco(endereco);
         carrinhoService.finalizarCompra(carrinhoId, cliente);
