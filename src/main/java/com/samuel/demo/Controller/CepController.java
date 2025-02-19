@@ -20,4 +20,5 @@ public class CepController {
     public Endereco getEndereco(@PathVariable String cep) {
         return cepService.buscarEnderecoPeloCep(cep);
     }
+
 }

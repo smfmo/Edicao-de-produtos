@@ -22,6 +22,7 @@
             <span th:text="${carrinho.cliente.endereco.localidade}"></span>
             <span th:text="${carrinho.cliente.endereco.uf}"></span>
              Número: <span th:text="${carrinho.cliente.endereco.numero}"></span>
+            Complemento: <span th:text="${carrinho.cliente.endereco.complemento}"></span>
         </h4>
         <h4> Data e hora da compra: <span th:text="${#temporals.format(carrinho.dataHoraCompra, 'dd/MM/yyyy HH:mm:ss')}"></span></h4>
         <table class="table table-striped">

@@ -4,14 +4,17 @@ package com.samuel.demo.Controller;
 import com.samuel.demo.model.*;
 import com.samuel.demo.repository.ItemCarrinhoRepository;
 import com.samuel.demo.service.CarrinhoService;
+import com.samuel.demo.service.CepService;
 import com.samuel.demo.service.ProdutoService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+
 
 @Controller
 @RequestMapping("/carrinho")
@@ -22,6 +25,8 @@ public class CarrinhoController {
     private ProdutoService produtoService;
     @Autowired
     private ItemCarrinhoRepository itemCarrinhoRepository;
+    @Autowired
+    private CepService cepService;
 
 
     //vizualizar o carrinho
@@ -69,7 +74,15 @@ public class CarrinhoController {
                                   @RequestParam String localidade,
                                   @RequestParam String uf,
                                   @RequestParam String numero,
-                                  HttpSession session){
+                                  @RequestParam String complemento,
+                                  HttpSession session,
+                                  RedirectAttributes redirectAttributes){
+
+        //válidar o cep
+        if (!cepService.cepAtendido(cep)) {
+            redirectAttributes.addFlashAttribute("error", "Desculpe, não atendemos sua região!");
+            return "redirect:/carrinho/" + carrinhoId;
+        }
         Cliente cliente = new Cliente();
         cliente.setNome(nome);
         cliente.setTelefone(telefone);
