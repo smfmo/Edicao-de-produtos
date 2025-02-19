@@ -61,6 +61,13 @@ public class CarrinhoController {
     public String mostrarFormCliente(@PathVariable Long carrinhoId, Model model){
         model.addAttribute("carrinhoId", carrinhoId);
         model.addAttribute("cliente", new Cliente());
+        List<ItemCarrinho> itens = carrinhoService.listarItensDoCarrinho(carrinhoId);
+        model.addAttribute("itens", itens);
+
+        double totalGeral = itens.stream()
+                .mapToDouble(item -> item.getQuantidade() * item.getProduto().getPreco())
+                .sum();
+        model.addAttribute("totalGeral", totalGeral);
         return "formulario-cliente";
     }
 

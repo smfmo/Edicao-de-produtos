@@ -68,6 +68,7 @@ public class CarrinhoService{
     //metodo para exibir as compras no controle de vendas
     public List<Carrinho> exibirCarrinho(){
         return carrinhoRepository.findAllWithItens();
+
     }
 
     //limpar carrinhos  exceto o ativo

@@ -23,7 +23,19 @@ public class Carrinho {
 
     private LocalDateTime dataHoraCompra;
 
+    @Transient
+    private double totalCarrinho;
+
     //métodos getters e setters
+
+    public double getTotalCarrinho() {
+        return totalCarrinho;
+    }
+
+    public void setTotalCarrinho(double totalCarrinho) {
+        this.totalCarrinho = totalCarrinho;
+    }
+
     public LocalDateTime getDataHoraCompra() {
         return dataHoraCompra;
     }

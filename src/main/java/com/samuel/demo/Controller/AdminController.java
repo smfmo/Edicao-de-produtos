@@ -118,8 +118,15 @@ public class AdminController {
 
     //ver as vendas no controle de vendas
     @GetMapping("controleVenda")
-    public String exibirCompras(Model model){
+    public String exibirCompras( Model model){
+        List<Carrinho> carrinhos = carrinhoService.exibirCarrinho();
+        for (Carrinho carrinho : carrinhos) {
+            double totalCarrinho = carrinho.getItens().stream().
+                    mapToDouble(ItemCarrinho::getPrecoTotal).sum();
+            carrinho.setTotalCarrinho(totalCarrinho);
+        }
         model.addAttribute("carrinhos", carrinhoService.exibirCarrinho());
+
         return "controleVenda";
     }
 }
