@@ -20,7 +20,7 @@ public class UserAdmService {
 
     public void criarUsuarioAdmin(String username, String password){
         if (userAdmRepository.findByUsername(username).isPresent()) {
-            System.out.println("usuário" + username + "já existe. nada foi feito.");
+            //System.out.println("usuário " + username + "já existe. nada foi feito.");
             return;
         }
 

@@ -20,7 +20,8 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/loginAdm").permitAll() // Permite acesso público ao login
-                        .requestMatchers("/admin/**", "/addProduto", "/editar/**", "/deletarProduto/**", "/restaurarProduto/**", "/controleVenda").hasRole("ADMIN") // Restringe acesso a URLs de admin
+                        .requestMatchers("/admin/**", "/addProduto", "/editar/**", "/deletarProduto/**",
+                                "/restaurarProduto/**", "/controleVenda").hasRole("ADMIN") // Restringe acesso a URLs de admin
                         .anyRequest().permitAll() // Permite acesso a todas as outras URLs
                 )
                 .formLogin(form -> form
@@ -35,7 +36,6 @@ public class SecurityConfig {
                 .exceptionHandling(exception -> exception
                         .accessDeniedPage("/loginAdm?error") // Redireciona para /loginAdm em caso de acesso negado
                 );
-
         return http.build();
     }
 
