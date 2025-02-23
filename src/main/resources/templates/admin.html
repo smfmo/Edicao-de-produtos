@@ -12,6 +12,11 @@
 </style>
 <body>
 <div class="container">
+    <div class="text-end mt-3">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-danger">desconectar</button>
+        </form>
+    </div>
     <h1>Adicionar Produto</h1>
     <form action="/addProduto" method="post" enctype="multipart/form-data">
         <div class="mb-3">

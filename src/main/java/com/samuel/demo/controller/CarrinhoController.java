@@ -1,4 +1,4 @@
-package com.samuel.demo.Controller;
+package com.samuel.demo.controller;
 
 
 import com.samuel.demo.model.*;

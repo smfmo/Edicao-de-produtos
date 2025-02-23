@@ -1,4 +1,4 @@
-package com.samuel.demo.Controller;
+package com.samuel.demo.controller;
 
 import com.samuel.demo.model.Carrinho;
 import com.samuel.demo.model.ItemCarrinho;
@@ -29,6 +29,12 @@ public class AdminController {
     private ProdutoRepository produtoRepository;
     @Autowired
     private CarrinhoService carrinhoService;
+
+    @GetMapping("/loginAdm")
+    public String loginAdm(){
+
+        return "loginAdm";
+    }
 
     //página do administrador
     @GetMapping("/admin")
